@@ -22,7 +22,7 @@ api.interceptors.response.use(response => {
             api.post('/refresh', {
                 refreshToken
             }).then(response => {
-                const {token} = response.data;
+                const { token } = response.data;
 
                 setCookie(undefined, 'nextauth.token', token, {
                     maxAge: 60 * 60 * 24 * 30, // 30 days
@@ -32,6 +32,8 @@ api.interceptors.response.use(response => {
                     maxAge: 60 * 60 * 24 * 30, // 30 days
                     path: '/'
                 })
+
+                api.defaults.headers['Authorization'] = `Bearer ${token}`
             })
         } else {
             // deslogar usuário
